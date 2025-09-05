@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "873150696450",
+    "project_id": "csia-52866",
+    "storage_bucket": "csia-52866.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:873150696450:android:f6bb3d182106186e0aab1b",
+        "android_client_info": {
+          "package_name": "com.example.test_firebase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-4gjhSZe38okt4hU1l4_kMQVIpxFcIqE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
