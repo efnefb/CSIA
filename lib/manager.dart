@@ -62,7 +62,11 @@ class Manager extends ChangeNotifier{
     newTask.id = task.id;
 
     for (int i = 0; i < taskList.length; i++) {
-      if (taskList[i] == task) taskList[i] = newTask;
+      if (taskList[i] == task){
+        taskList[i] = newTask;
+        break;
+      }
+
     }
 
     firestoreSerivce.addOrUpdateTask(newTask);
@@ -74,6 +78,7 @@ class Manager extends ChangeNotifier{
       if (taskList[i] == task) {
         taskList[i].startTime = taskTimes['startTime'] as DateTime;
         taskList[i].endTime = taskTimes['endTime'] as DateTime;
+        break;
       }
     }
 
