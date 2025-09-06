@@ -157,7 +157,7 @@ class _TaskBlockState extends State<TaskBlock> {
               children: [
                 IconButton(
                   onPressed: () async {
-                    final taskTimeData = await TimeHandler.selectTimes(context);
+                    final taskTimeData = await TimeHandler.selectTimes(context, widget.task);
                     context.read<Manager>().updateTaskTimes(taskTimeData, widget.task);},
                   icon: Icon(Icons.calendar_today, size: 20),
                   tooltip: 'Set times',

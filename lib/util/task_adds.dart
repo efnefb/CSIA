@@ -6,34 +6,22 @@ import '../util/controllers.dart';
 import '../util/task_changes.dart';
 
 class TaskAdds extends TaskChanges {
-  TaskAdds({
-    super.key,
-}) : super(controllers: Controllers());
+  TaskAdds({super.key}) : super(controllers: Controllers());
 
   @override
   State<TaskAdds> createState() => _TaskAddsState();
-
 }
 
-class _TaskAddsState extends TaskChangesState<TaskAdds>{
-
+class _TaskAddsState extends TaskChangesState<TaskAdds> {
   @override
-  void initializeControllers(){
+  void initializeControllers() {
     widget.controllers.clearAll();
   }
 
   @override
-  void onSave(){
+  void onSave() {
     Map<String, dynamic> taskData = widget.controllers.getInputtedData();
-    context.read<Manager>().addTask(
-      Task.pack(taskData)
-    );
+    context.read<Manager>().addTask(Task.pack(taskData));
     widget.controllers.clearAll();
   }
 }
-
-
-
-
-
-

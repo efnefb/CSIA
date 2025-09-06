@@ -34,28 +34,30 @@ class TimeHandler {
   }
 
 
-
   static Future<Map<String, Object>> selectTimes(BuildContext context, [Task? task,]) async {
+    /*
+    Task? task is either a Task added from Calendar or edited from Dashboard / Calendar
+    -- if editing, times are pre-filled with Task's existing time settings
+    -- if adding, times are not pre-filled
 
-    DateTime selectedBaseDate = DateTime.now();
+     */
+    DateTime selectedBaseDate;
 
-    // Handle base date selection
-    if (task?.startTime != null) {
-      selectedBaseDate = DateTime(
-        task!.startTime.year,
-        task.startTime.month,
-        task.startTime.day,
-      );
+    if (task != null) {
+      selectedBaseDate = task.startTime;
     } else {
-      final DateTime? pickedDate = await showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(2000),
-        lastDate: DateTime(2100),
-      );
-      if (pickedDate != null) {
-        selectedBaseDate = pickedDate;
-      }
+      selectedBaseDate = Task.defaultValuesMap['startTime'];
+    }
+
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: selectedBaseDate,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
+
+    if (pickedDate != null) {
+      selectedBaseDate = pickedDate;
     }
 
     final inputtedData = await showDialog<Map<String, dynamic>>(
@@ -79,6 +81,7 @@ class TimeHandler {
           initialEndTime = TimeOfDay(hour: now.hour + 1, minute: now.minute);
         }
 
+        //Initialized variablesfor user to set
         TimeOfDay startTime = initialStartTime;
         TimeOfDay endTime = initialEndTime;
         int dayOffset = 0;
@@ -251,6 +254,7 @@ class TimeHandler {
       },
     );
 
+    //Returns user inputted data, packages into Map, returns the Map
     if (inputtedData != null) {
       final DateTime baseDate = inputtedData['baseDate'] as DateTime;
       final TimeOfDay startTime = inputtedData['start'] as TimeOfDay;

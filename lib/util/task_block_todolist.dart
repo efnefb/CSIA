@@ -189,7 +189,7 @@ class _TaskBlockTodolistState extends State<TaskBlockTodolist> {
                 IconButton(
                   onPressed: () async {
                     final taskTimeData = await TimeHandler.selectTimes(
-                        context
+                        context, widget.task
                     );
                     context.read<Manager>().updateTaskTimes(taskTimeData, widget.task);
                   },
@@ -207,7 +207,6 @@ class _TaskBlockTodolistState extends State<TaskBlockTodolist> {
                   constraints: BoxConstraints(),
                 ),
                 const SizedBox(width: 10),
-
                 IconButton(
                   onPressed: (){
                     Manager.showDeleteConfirmation(context, widget.task, context.read<Manager>().deleteTask);

@@ -22,6 +22,7 @@ class Manager extends ChangeNotifier{
 
   bool isLoading = true;
 
+
   Future<void> initialize() async{
     await loadTasksAndCategories();
   }
@@ -47,26 +48,18 @@ class Manager extends ChangeNotifier{
 
     notifyListeners();
     firestoreSerivce.addOrUpdateTask(newTask);
+
+    print(newTask.unpack());
   }
 
   void updateTask(Map<String, dynamic> newTaskData, Task task) {
-    Map<String, dynamic> newTaskData1 = newTaskData;
-    if (newTaskData['startTime'] == Task.defaultValuesMap['startTime'] || newTaskData['endTime'] == Task.defaultValuesMap['endTime']) {
-      newTaskData1['startTime'] = task.startTime;
-      newTaskData1['endTime'] = task.endTime;
-    } else {
-      newTaskData1 = newTaskData;
-    }
-
-    Task newTask = Task.pack(newTaskData1);
+    Task newTask = Task.pack(newTaskData);
     newTask.id = task.id;
-
     for (int i = 0; i < taskList.length; i++) {
       if (taskList[i] == task){
         taskList[i] = newTask;
         break;
       }
-
     }
 
     firestoreSerivce.addOrUpdateTask(newTask);
@@ -175,8 +168,9 @@ class Manager extends ChangeNotifier{
   static void displayTaskEditsUI({
     required BuildContext context,
     required Task task,
+    Task? calendarViewAddedTask,
     bool? isCalendarInitialAdd,
-    Task? calendarViewAddedTask}) {
+    }) {
     showDialog(
       context: context,
       builder: (context) {

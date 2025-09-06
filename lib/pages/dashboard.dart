@@ -12,6 +12,7 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  //Variables dynamically set by user for filtering
   TextEditingController taskNameSearchController = TextEditingController();
   String? categorySearchQuery;
   String? effortSearchQuery;
@@ -144,7 +145,6 @@ class _DashboardState extends State<Dashboard> {
 
     return Consumer<Manager>(
       builder: (context, manager, child){
-
         return Padding(
           padding: const EdgeInsets.all(10.0),
           child: Scaffold(
@@ -510,7 +510,6 @@ class _DashboardState extends State<Dashboard> {
                                     upperTimeSearchQuery = null;
                                     lowerTimeSearchQuery = null;
                                     currentSortOrder = null;
-
                                     updateFilteredTaskList();
                                   });
                                 },

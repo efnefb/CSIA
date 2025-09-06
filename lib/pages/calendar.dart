@@ -161,7 +161,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
     if (isShortAppointment) {
       // Minimal display for short appointments, only name and time
       return Container(
-        padding: EdgeInsets.all(1), // Reduced from 2 to 1
+        padding: EdgeInsets.all(1),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -173,20 +173,20 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 10, // Reduced from 11 to 10
-                    height: 1.0, // Explicit line height
+                    fontSize: 10,
+                    height: 1.0,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.center,
                 ),
               ),
-              SizedBox(height: 1), // Reduced from 2 to 1
+              SizedBox(height: 1),
               Text(
                 formatTimeRange(appointment.startTime, appointment.endTime),
                 style: TextStyle(
                   color: Colors.white.withOpacity(0.9),
-                  fontSize: 8, // Reduced from 9 to 8
+                  fontSize: 8,
                   fontWeight: FontWeight.w600,
                   height: 1.0,
                 ),
@@ -200,15 +200,15 @@ class _CalendarWidgetState extends State<CalendarWidget> {
     } else {
       // Full display for longer appointments, scrollable
       return Container(
-        padding: EdgeInsets.all(1), // Reduced from 2 to 1
+        padding: EdgeInsets.all(1),
         child: LayoutBuilder(
           builder: (context, constraints) {
             return SingleChildScrollView(
               physics: BouncingScrollPhysics(),
               child: ConstrainedBox(
                 constraints: BoxConstraints(
-                  minWidth: constraints.maxWidth - 2, // Subtract padding
-                  maxWidth: constraints.maxWidth - 2, // Subtract padding
+                  minWidth: constraints.maxWidth - 2,
+                  maxWidth: constraints.maxWidth - 2,
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -221,21 +221,21 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 10, // Reduced from 11 to 10
+                        fontSize: 10,
                         height: 1.0,
                       ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
 
-                    SizedBox(height: 1), // Reduced from 2 to 1
+                    SizedBox(height: 1),
 
                     // Time range
                     Text(
                       formatTimeRange(appointment.startTime, appointment.endTime),
                       style: TextStyle(
                         color: Colors.white.withOpacity(0.9),
-                        fontSize: 8, // Reduced from 9 to 8
+                        fontSize: 8,
                         fontWeight: FontWeight.w600,
                         height: 1.0,
                       ),
@@ -243,7 +243,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                       overflow: TextOverflow.ellipsis,
                     ),
 
-                    SizedBox(height: 2), // Reduced from 3 to 2
+                    SizedBox(height: 2),
 
                     // Category and priority on same line
                     if (task?.category != null || task?.priority != null)
@@ -271,19 +271,19 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                           if (task?.priority != null)
                             Container(
                               constraints: BoxConstraints(
-                                maxWidth: constraints.maxWidth * 0.15, // Reduced from 0.2 to 0.15
+                                maxWidth: constraints.maxWidth * 0.15,
                               ),
-                              margin: EdgeInsets.only(left: 1), // Reduced from 2 to 1
-                              padding: EdgeInsets.symmetric(horizontal: 2, vertical: 0), // Reduced padding
+                              margin: EdgeInsets.only(left: 1),
+                              padding: EdgeInsets.symmetric(horizontal: 2, vertical: 0),
                               decoration: BoxDecoration(
                                 color: Manager.getPriorityEffortColor(task!.priority),
-                                borderRadius: BorderRadius.circular(2), // Reduced from 3 to 2
+                                borderRadius: BorderRadius.circular(2),
                               ),
                               child: Text(
                                 task.priority[0],
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 6, // Reduced from 7 to 6
+                                  fontSize: 6,
                                   fontWeight: FontWeight.bold,
                                   height: 1.0,
                                 ),
@@ -298,12 +298,12 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                     // Effort level
                     if (task?.effort != null)
                       Padding(
-                        padding: EdgeInsets.only(top: 1), // Reduced from 2 to 1
+                        padding: EdgeInsets.only(top: 1),
                         child: Text(
                           '${task!.effort} effort',
                           style: TextStyle(
                             color: Colors.white.withOpacity(0.8),
-                            fontSize: 7, // Reduced from 8 to 7
+                            fontSize: 7,
                             fontWeight: FontWeight.w600,
                             height: 1.0,
                           ),
@@ -315,12 +315,12 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                     // Description
                     if (task?.description.isNotEmpty == true)
                       Padding(
-                        padding: EdgeInsets.only(top: 1), // Reduced from 2 to 1
+                        padding: EdgeInsets.only(top: 1),
                         child: Text(
                           task!.description,
                           style: TextStyle(
                             color: Colors.white.withOpacity(0.7),
-                            fontSize: 7, // Reduced from 8 to 7
+                            fontSize: 7,
                             fontStyle: FontStyle.italic,
                             fontWeight: FontWeight.w600,
                             height: 1.0,
@@ -464,8 +464,8 @@ class _CalendarWidgetState extends State<CalendarWidget> {
             Manager.displayTaskEditsUI(
               context: context,
               task: newTask,
-              isCalendarInitialAdd: true,
               calendarViewAddedTask: newTask,
+              isCalendarInitialAdd: true,
             );
           } else if (details.targetElement == CalendarElement.appointment && details.appointments != null) {
             final Appointment tappedAppointment = details.appointments!.first;
@@ -475,8 +475,8 @@ class _CalendarWidgetState extends State<CalendarWidget> {
             Manager.displayTaskEditsUI(
               context: context,
               task: selectedTask,
-              isCalendarInitialAdd: false,
               calendarViewAddedTask: selectedTask,
+              isCalendarInitialAdd: false,
             );
           }
         },

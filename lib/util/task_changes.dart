@@ -6,12 +6,20 @@ import '../util/controllers.dart';
 import '../manager.dart';
 
 abstract class TaskChanges extends StatefulWidget {
+  /*
+  CRUD operations are either
+  -- User adds from Dashboard
+  -- User adds from Calendar
+  -- User edits from Dashboard/Calendar
+   */
   final Controllers controllers;
-  final Task? calendarViewAddedTask;
+  final Task? task;
+  final Task? calendarViewAddedTask; //Nullable. Pass in if adding from Calendar -- different handling needed
 
   TaskChanges({
     super.key,
     required this.controllers,
+    this.task,
     this.calendarViewAddedTask,
   });
 }
@@ -130,12 +138,21 @@ abstract class TaskChangesState<T extends TaskChanges> extends State<T> {
 
             IconButton(
               onPressed: () async {
-                final taskTimeData = widget.calendarViewAddedTask != null
-                    ? await TimeHandler.selectTimes(
-                        context,
-                        widget.calendarViewAddedTask,
-                      )
-                    : await TimeHandler.selectTimes(context);
+                Map<String, dynamic> taskTimeData = {};
+                if (widget.task != null){
+                  taskTimeData = await TimeHandler.selectTimes(
+                    context,
+                    widget.task,
+                  );
+                } else if (widget.calendarViewAddedTask != null){
+                  taskTimeData = await TimeHandler.selectTimes(
+                    context,
+                    widget.calendarViewAddedTask,
+                  );
+                } else {
+                  taskTimeData = await TimeHandler.selectTimes(context);
+                }
+
                 widget.controllers.startTimeSelected =
                     taskTimeData['startTime'] as DateTime?;
                 widget.controllers.endTimeSelected =

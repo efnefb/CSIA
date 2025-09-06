@@ -29,16 +29,14 @@ class Controllers {
 
   Map<String, dynamic> getInputtedData(){
     return {
-      'name': nameController.text.isNotEmpty ? nameController.text : Task.defaultValuesMap['name'],
+      'name': nameController.text,
       'description': descriptionController.text,
-      'category': categorySelected ?? Task.defaultValuesMap['category'],
-      'effort': effortSelected ?? Task.defaultValuesMap['effort'],
-      'priority': prioritySelected ?? Task.defaultValuesMap['priority'],
-      'isCompleted': false,
-      'startTime': startTimeSelected ?? Task.defaultValuesMap['startTime'],
-      'endTime': endTimeSelected ?? Task.defaultValuesMap['endTime'],
+      'category': categorySelected,
+      'effort': effortSelected,
+      'priority': prioritySelected,
+      'startTime': startTimeSelected,
+      'endTime': endTimeSelected
     };
   }
-
-
 }
+
