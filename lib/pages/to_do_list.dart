@@ -13,10 +13,6 @@ class ToDoList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Task> dayTasks = context.read<Manager>().taskList.where(
-            (task) => task.startTime.day == DateTime.now().day
-    ).toList();
-
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
@@ -36,16 +32,22 @@ class ToDoList extends StatelessWidget {
           elevation: 2,
         ),
 
-        body: ListView.builder(
-            itemCount: dayTasks.length,
-            itemBuilder: (context, index) {
-              return TaskBlockTodolist(
-                task: dayTasks[index],
-              );
-            }
+        body: Consumer<Manager>(
+          builder: (context, manager, child) {
+            List<Task> dayTasks = manager.taskList.where(
+                    (task) => task.startTime.day == DateTime.now().day
+            ).toList();
+
+            return ListView.builder(
+                itemCount: dayTasks.length,
+                itemBuilder: (context, index) {
+                  return TaskBlockTodolist(
+                    task: dayTasks[index],
+                  );
+                }
+            );
+          },
         ),
-
-
       ),
     );
   }
