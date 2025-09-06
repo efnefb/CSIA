@@ -155,35 +155,6 @@ class _TaskBlockTodolistState extends State<TaskBlockTodolist> {
               ],
             ),
 
-            // Recurrence info
-            if (widget.task.recurrence != 'none')
-              Padding(
-                padding: const EdgeInsets.only(top: 8),
-                child: Row(
-                  children: [
-                    Icon(Icons.repeat, size: 16, color: Colors.green[600]),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        TimeHandler.getRecurrencePreview(
-                          widget.task.recurrence,
-                          widget.task.customRecurrenceDays,
-                          DateTime(
-                            widget.task.startTime.year,
-                            widget.task.startTime.month,
-                            widget.task.startTime.day,
-                          ),
-                        ),
-                        style: TextStyle(
-                          fontSize: 13,
-                          color: Colors.green[700],
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
 
             // Description
             if (widget.task.description.isNotEmpty)
@@ -229,7 +200,7 @@ class _TaskBlockTodolistState extends State<TaskBlockTodolist> {
                 ),
                 const SizedBox(width: 6),
                 IconButton(
-                  onPressed: () => Manager.displayTaskEditsUI(context, widget.task, false),
+                  onPressed: () => Manager.displayTaskEditsUI(context: context, task: widget.task),
                   icon: Icon(Icons.edit, size: 20, color: Colors.blue),
                   tooltip: 'Edit task',
                   padding: EdgeInsets.zero,

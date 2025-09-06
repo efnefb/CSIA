@@ -75,32 +75,6 @@ class _TaskBlockState extends State<TaskBlock> {
                       ),
                     ],
                   ),
-                  if (widget.task.recurrence != 'none')
-                    Row(
-                      children: [
-                        Icon(Icons.repeat, size: 16, color: Colors.green),
-                        const SizedBox(width: 6),
-                        Expanded(
-                          child: Text(
-                            TimeHandler.getRecurrencePreview(
-                              widget.task.recurrence,
-                              widget.task.customRecurrenceDays,
-                              DateTime(
-                                widget.task.startTime.year,
-                                widget.task.startTime.month,
-                                widget.task.startTime.day,
-                              ),
-                            ),
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.green[700],
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ],
-                    ),
                 ],
               ),
             ),
@@ -192,7 +166,7 @@ class _TaskBlockState extends State<TaskBlock> {
                 ),
                 const SizedBox(width: 6),
                 IconButton(
-                  onPressed: () => Manager.displayTaskEditsUI(context, widget.task, false),
+                  onPressed: () => Manager.displayTaskEditsUI(context: context, task: widget.task),
                   icon: Icon(Icons.edit, size: 20),
                   tooltip: 'Edit task',
                   padding: EdgeInsets.zero,

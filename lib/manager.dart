@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:test_firebase/pages/timer_popup.dart';
-import 'package:test_firebase/util/firestore_service.dart';
+import 'package:test_firebase/firestore_service.dart';
 import 'package:test_firebase/util/task.dart';
 import 'package:test_firebase/util/task_adds.dart';
 import 'package:test_firebase/util/task_edits.dart';
@@ -12,6 +12,7 @@ class Manager extends ChangeNotifier{
   factory Manager() => _instance;
   Manager._internal();
 
+  final firestoreSerivce = FirestoreService();
   List<Task> taskList = [];
   List<Task> completedTasks = [];
   Set<String> categorySet = {};
@@ -20,7 +21,6 @@ class Manager extends ChangeNotifier{
   static final List<String> priorityList = List.unmodifiable(['Low', 'Mid', 'High']);
 
   bool isLoading = true;
-  final firestoreSerivce = FirestoreService();
 
   Future<void> initialize() async{
     await loadTasksAndCategories();
@@ -74,9 +74,6 @@ class Manager extends ChangeNotifier{
       if (taskList[i] == task) {
         taskList[i].startTime = taskTimes['startTime'] as DateTime;
         taskList[i].endTime = taskTimes['endTime'] as DateTime;
-        taskList[i].recurrence = taskTimes['recurrence'] as String;
-        taskList[i].customRecurrenceDays =
-        taskTimes['customRecurrenceDays'] as int;
       }
     }
 
@@ -153,7 +150,6 @@ class Manager extends ChangeNotifier{
             onPressed: () {
               deleteTask(task);
               Navigator.pop(context); // Close delete confirmation
-              //onDeleteComplete?.call(); // Call callback if provided
             },
             child: Text('Delete', style: TextStyle(color: Colors.red)),
           ),
@@ -171,17 +167,17 @@ class Manager extends ChangeNotifier{
     );
   }
 
-  static void displayTaskEditsUI(
-    BuildContext context,
-    Task task,
-    bool isCalendarInitialAdd,
-    [Task? calendarViewAddTask]) {
+  static void displayTaskEditsUI({
+    required BuildContext context,
+    required Task task,
+    bool? isCalendarInitialAdd,
+    Task? calendarViewAddedTask}) {
     showDialog(
       context: context,
       builder: (context) {
         return TaskEdits(
           task: task,
-          calendarViewAddTask: calendarViewAddTask,
+          calendarViewAddedTask: calendarViewAddedTask,
           isCalendarInitialAdd: isCalendarInitialAdd,
         );
       },

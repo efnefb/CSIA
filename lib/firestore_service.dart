@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'task.dart';
+import 'util/task.dart';
 
 class FirestoreService{
   final CollectionReference<Map<String, dynamic>> taskListFB = FirebaseFirestore.instance.collection("taskList");
@@ -10,7 +10,6 @@ class FirestoreService{
   void addOrUpdateTask(Task newTask) {
     taskListFB.doc(newTask.id).set(newTask.unpack());
   }
-
 
   void updateTaskTimes(Map<String, dynamic> taskTimes, Task task) {
     taskListFB.doc(task.id).update({
@@ -93,7 +92,6 @@ class FirestoreService{
 
     return categoryData.cast<String>().toSet();
   }
-
 
   static DateTime? convertFirestoreDate(dynamic date) {
     if (date == null) return null;

@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'firestore_service.dart';
+import '../firestore_service.dart';
 
 class Task {
   String id;
@@ -11,8 +11,6 @@ class Task {
   bool isCompleted = false;
   DateTime startTime;
   DateTime endTime;
-  String recurrence;
-  int customRecurrenceDays;
 
   static Map<String, dynamic> defaultValuesMap = {
     "name": "New Task",
@@ -23,8 +21,6 @@ class Task {
     "isCompleted":false,
     "startTime": DateTime.now(),
     'endTime':DateTime.now().add(const Duration(hours: 1)),
-    "recurrence": "none",
-    'customRecurrenceDays': 0,
   };
 
   Task({
@@ -37,8 +33,6 @@ class Task {
     required this.isCompleted,
     required this.startTime,
     required this.endTime,
-    required this.recurrence,
-    required this.customRecurrenceDays,
   });
 
 
@@ -61,14 +55,8 @@ class Task {
           ? data['priority'] as String
           : defaultValuesMap['priority'] as String,
       isCompleted: data['isCompleted'] as bool? ?? defaultValuesMap['isCompleted'] as bool,
-
       startTime: FirestoreService.convertFirestoreDate(data['startTime']) ?? defaultValuesMap['startTime'] as DateTime,
       endTime: FirestoreService.convertFirestoreDate(data['endTime']) ?? defaultValuesMap['endTime'] as DateTime,
-
-      recurrence: data['recurrence']?.toString().isNotEmpty == true
-          ? data['recurrence'] as String
-          : defaultValuesMap['recurrence'] as String,
-      customRecurrenceDays: data['customRecurrenceDays'] as int? ?? defaultValuesMap['customRecurrenceDays'] as int,
     );
   }
 
@@ -84,13 +72,11 @@ class Task {
       "isCompleted":isCompleted,
       "startTime":Timestamp.fromDate(startTime),
       'endTime':Timestamp.fromDate(endTime),
-      "recurrence": recurrence,
-      'customRecurrenceDays': customRecurrenceDays,
     };
   }
 
   @override
   String toString() {
-    return 'Task{id: $id, name: $name, description: $description, category: $category, effort: $effort, priority: $priority, isCompleted: $isCompleted, startTime: $startTime, endTime: $endTime, recurrence: $recurrence, customRecurrenceDays: $customRecurrenceDays}';
+    return 'Task{id: $id, name: $name, description: $description, category: $category, effort: $effort, priority: $priority, isCompleted: $isCompleted, startTime: $startTime, endTime: $endTime}';
   }
 }

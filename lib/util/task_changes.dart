@@ -7,12 +7,12 @@ import '../manager.dart';
 
 abstract class TaskChanges extends StatefulWidget {
   final Controllers controllers;
-  final Task? calendarViewAddTask;
+  final Task? calendarViewAddedTask;
 
   TaskChanges({
     super.key,
     required this.controllers,
-    this.calendarViewAddTask,
+    this.calendarViewAddedTask,
   });
 }
 
@@ -36,7 +36,6 @@ abstract class TaskChangesState<T extends TaskChanges> extends State<T> {
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
-
           children: [
             //NAME
             TextField(
@@ -131,22 +130,16 @@ abstract class TaskChangesState<T extends TaskChanges> extends State<T> {
 
             IconButton(
               onPressed: () async {
-                final taskTimeData = widget.calendarViewAddTask != null
+                final taskTimeData = widget.calendarViewAddedTask != null
                     ? await TimeHandler.selectTimes(
                         context,
-                        widget.calendarViewAddTask,
+                        widget.calendarViewAddedTask,
                       )
                     : await TimeHandler.selectTimes(context);
                 widget.controllers.startTimeSelected =
                     taskTimeData['startTime'] as DateTime?;
                 widget.controllers.endTimeSelected =
                     taskTimeData['endTime'] as DateTime?;
-                widget.controllers.recurrenceSelected =
-                    taskTimeData['recurrence'] as String?;
-                widget.controllers.customRecurrenceDaysSelected =
-                    taskTimeData['customRecurrenceDays'] as int?;
-                widget.controllers.recurUntil =
-                    taskTimeData['recurUntil'] as DateTime?;
               },
               icon: Icon(Icons.calendar_today, size: 20),
               tooltip: 'Set times',
@@ -158,12 +151,12 @@ abstract class TaskChangesState<T extends TaskChanges> extends State<T> {
       ),
 
       actions: [
-        if (widget.calendarViewAddTask != null)
+        if (widget.calendarViewAddedTask != null)
           IconButton(
             onPressed: () {
               Manager.showDeleteConfirmation(
                 context,
-                widget.calendarViewAddTask as Task,
+                widget.calendarViewAddedTask as Task,
                 context.read<Manager>().deleteTask,
                 onDeleteComplete: () {
                   Navigator.of(context).pop(); // Close the TaskEdits dialog after deletion
@@ -173,10 +166,10 @@ abstract class TaskChangesState<T extends TaskChanges> extends State<T> {
             icon: Icon(Icons.delete, color: Colors.red),
             tooltip: "Delete Task",
           ),
-        if (widget.calendarViewAddTask != null)
+        if (widget.calendarViewAddedTask != null)
           IconButton(
             onPressed: () {
-              context.read<Manager>().completeTask(widget.calendarViewAddTask as Task);
+              context.read<Manager>().completeTask(widget.calendarViewAddedTask as Task);
               Navigator.of(context).pop();
             },
             icon: Icon(Icons.check),

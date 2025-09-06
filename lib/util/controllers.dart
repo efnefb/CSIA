@@ -10,9 +10,6 @@ class Controllers {
   String? prioritySelected;
   DateTime? startTimeSelected;
   DateTime? endTimeSelected;
-  String? recurrenceSelected;
-  int? customRecurrenceDaysSelected;
-  DateTime? recurUntil;
 
   void disposeAll(){
     nameController.dispose();
@@ -27,9 +24,6 @@ class Controllers {
     prioritySelected = null;
     startTimeSelected = null;
     endTimeSelected = null;
-    recurrenceSelected = null;
-    customRecurrenceDaysSelected = null;
-    recurUntil = null;
   }
 
 
@@ -43,9 +37,6 @@ class Controllers {
       'isCompleted': false,
       'startTime': startTimeSelected ?? Task.defaultValuesMap['startTime'],
       'endTime': endTimeSelected ?? Task.defaultValuesMap['endTime'],
-      'recurrence': recurrenceSelected ?? Task.defaultValuesMap['recurrence'],
-      'customRecurrenceDays': customRecurrenceDaysSelected ?? Task.defaultValuesMap['customRecurrenceDays'],
-      'recurUntil': recurUntil ?? Task.defaultValuesMap['recurUntil'],
     };
   }
 

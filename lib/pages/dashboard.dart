@@ -88,33 +88,55 @@ class _DashboardState extends State<Dashboard> {
     }
   }
 
-  List<Task> sortedFilteredTaskList(List<Task> toSort, bool ascending) {
-    List<Task> sortedList = List<Task>.from(toSort);
+  List<Task> sortedFilteredTaskList(List<Task> toSort, bool ascending){
+    List<Task> sorted = List<Task>.from(toSort);
+    sortList(sorted, ascending);
+    return sorted;
+  }
 
-    bool isSorted = false;
-    Task temp;
+  Duration getDuration(Task task){
+    return task.endTime.difference(task.startTime);
+  }
 
-    while (isSorted == false) {
-      isSorted = true;
-      for (int i = 0; i < sortedList.length - 1; i++) {
+  void sortList(List<Task> toSort, bool ascending){
+    if (toSort.length > 1){
+      List<Task> left = [];
+      List<Task> equal = [];
+      List<Task> right = [];
 
-        Duration duration = sortedList[i].endTime.difference(sortedList[i].startTime,);
-        Duration durationNext = sortedList[i + 1].endTime.difference(sortedList[i + 1].startTime,);
+      Task pivot = toSort[toSort.length ~/ 2];
 
-        bool swapCondition = ascending == true
-            ? duration < durationNext
-            : duration > durationNext;
-
-        if (swapCondition == true) {
-          temp = sortedList[i];
-          sortedList[i] = sortedList[i + 1];
-          sortedList[i + 1] = temp;
-          isSorted = false;
+      for (Task task in toSort){
+        if (getDuration(task) < getDuration(pivot)){
+          if (ascending){
+            right.add(task);
+          } else{
+            left.add(task);
+          }
+        }
+        else if (getDuration(task) > getDuration(pivot)){
+          if (ascending){
+            left.add(task);
+          } else {
+            right.add(task);
+          }
+        }
+        else {
+          equal.add(task);
         }
       }
+
+      sortList(left, ascending);
+      sortList(right, ascending);
+
+      toSort.clear();
+      toSort.addAll([...left, ...equal, ...right]);
     }
-    return sortedList;
   }
+
+
+
+
 
   @override
   Widget build(BuildContext context) {

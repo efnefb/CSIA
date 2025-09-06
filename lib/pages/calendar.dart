@@ -23,27 +23,6 @@ class _CalendarState extends State<Calendar> {
   int viewKey = 0;
   CalendarView currentView = CalendarView.week;
 
-  //heper method to get Syncfusion specific recurrence rule string from Task recurrence field
-  String getRecurrenceRule(Task task) {
-    switch (task.recurrence) {
-      case 'none':
-        return '';
-      case 'daily':
-        return 'FREQ=DAILY;INTERVAL=1';
-      case 'weekly':
-        return 'FREQ=WEEKLY;INTERVAL=1';
-      case 'monthly':
-        return 'FREQ=MONTHLY;INTERVAL=1';
-      case 'custom':
-        if (task.customRecurrenceDays > 0) {
-          return 'FREQ=DAILY;INTERVAL=${task.customRecurrenceDays}';
-        } else {
-          return '';
-        }
-      default:
-        return '';
-    }
-  }
 
   @override
   void initState() {
@@ -65,7 +44,6 @@ class _CalendarState extends State<Calendar> {
           endTime: task.endTime,
           notes: task.description,
           subject: task.name,
-          recurrenceRule: getRecurrenceRule(task)
       );
       taskListCalendar.add(appointment);
       appointmentTaskMap[appointment] = task;
@@ -470,7 +448,6 @@ class _CalendarWidgetState extends State<CalendarWidget> {
           );
         },
 
-
         onTap: (CalendarTapDetails details) {
           if (details.targetElement == CalendarElement.calendarCell) {
             Map<String, dynamic> newTaskData = {
@@ -485,10 +462,10 @@ class _CalendarWidgetState extends State<CalendarWidget> {
             context.read<Manager>().addTask(newTask);
 
             Manager.displayTaskEditsUI(
-              context,
-              newTask,
-              true,
-              newTask,
+              context: context,
+              task: newTask,
+              isCalendarInitialAdd: true,
+              calendarViewAddedTask: newTask,
             );
           } else if (details.targetElement == CalendarElement.appointment && details.appointments != null) {
             final Appointment tappedAppointment = details.appointments!.first;
@@ -496,10 +473,10 @@ class _CalendarWidgetState extends State<CalendarWidget> {
             Task selectedTask = widget.appointmentTaskMap[tappedAppointment] as Task;
 
             Manager.displayTaskEditsUI(
-              context,
-              selectedTask,
-              false,
-              selectedTask,
+              context: context,
+              task: selectedTask,
+              isCalendarInitialAdd: false,
+              calendarViewAddedTask: selectedTask,
             );
           }
         },
